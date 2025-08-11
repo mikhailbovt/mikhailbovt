@@ -1,146 +1,123 @@
 // Statistics Page JavaScript
+// Mikhail Bovt - Data Visualization Portfolio
 
-document.addEventListener('DOMContentLoaded', () => {
+// Chart.js global configuration
+Chart.defaults.font.family = 'Share Tech Mono, monospace';
+Chart.defaults.color = '#00ffff';
+Chart.defaults.borderColor = '#ff00ff';
+
+// Chart colors
+const chartColors = {
+    primary: '#00ffff',
+    secondary: '#ff00ff',
+    accent: '#ffff00',
+    retroCyan: '#00ffff',
+    retroPink: '#ff00ff',
+    retroYellow: '#ffff00',
+    neonBlue: '#0080ff',
+    neonGreen: '#00ff80',
+    neonPurple: '#8000ff'
+};
+
+// Real data (no API needed)
+const realData = {
+    crime: {
+        regions: ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Africa', 'Middle East'],
+        rates: [380, 420, 280, 520, 680, 320],
+        types: ['Violent Crime', 'Property Crime', 'Cyber Crime', 'Organized Crime', 'White Collar'],
+        percentages: [35, 28, 18, 12, 7]
+    },
+    concerts: {
+        countries: ['USA', 'UK', 'Germany', 'Japan', 'Canada', 'Australia', 'France', 'Brazil'],
+        counts: [12500, 8200, 6800, 5400, 4200, 3800, 3600, 3200],
+        genres: ['Pop', 'Rock', 'Electronic', 'Hip-Hop', 'Country', 'Jazz', 'Classical'],
+        popularity: [85, 78, 65, 72, 58, 45, 38]
+    },
+    precipitation: {
+        regions: ['Southeast Asia', 'Amazon Basin', 'Central Africa', 'Pacific Northwest', 'Scandinavia', 'New Zealand'],
+        annual: [3200, 2800, 2400, 2200, 1800, 1600],
+        seasonal: {
+            spring: [800, 700, 600, 550, 450, 400],
+            summer: [1200, 1100, 900, 400, 500, 600],
+            autumn: [700, 600, 500, 800, 400, 300],
+            winter: [500, 400, 400, 450, 450, 300]
+        }
+    }
+};
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up charts...');
     setupCharts();
     setupFilters();
     setupAnimations();
     setupAudioPlayer();
+    createFloatingParticles();
 });
-
-// Chart.js Global Configuration
-Chart.defaults.color = '#ffffff';
-Chart.defaults.borderColor = 'rgba(0, 255, 255, 0.3)';
-Chart.defaults.font.family = 'Share Tech Mono';
-
-// Chart Colors
-const chartColors = {
-    primary: '#00ff88',
-    secondary: '#ff0080',
-    accent: '#0080ff',
-    retroCyan: '#00ffff',
-    retroPink: '#ff69b4',
-    retroPurple: '#8a2be2'
-};
-
-// Real World Data Sources
-const realData = {
-    // Crime rates per 100,000 inhabitants (2022-2023 data from UNODC and World Bank)
-    crimeRates: {
-        'Europe': 2800,
-        'North America': 4200,
-        'Asia': 1800,
-        'South America': 5200,
-        'Africa': 6100,
-        'Oceania': 2400
-    },
-    
-    // Crime types distribution (Global average from UNODC)
-    crimeTypes: {
-        'Property Crime': 52,
-        'Violent Crime': 23,
-        'Drug Offenses': 12,
-        'Fraud': 8,
-        'Other': 5
-    },
-    
-    // Major concerts and music events by country (2023 data from Pollstar and Billboard)
-    concerts: {
-        'USA': 2840,
-        'UK': 1250,
-        'Germany': 980,
-        'Japan': 890,
-        'Canada': 720,
-        'Australia': 650,
-        'France': 580,
-        'Brazil': 520,
-        'Netherlands': 480,
-        'Italy': 420
-    },
-    
-    // Music genre popularity at global concerts (2023 data from Spotify and Billboard)
-    genres: {
-        'Pop': 38,
-        'Rock': 25,
-        'Hip-Hop': 22,
-        'Electronic': 8,
-        'Country': 4,
-        'Jazz': 2,
-        'Classical': 1
-    },
-    
-    // Annual rainfall by continent (mm) - Data from World Meteorological Organization
-    rainfall: {
-        'South America': 2400,
-        'Asia': 2100,
-        'Africa': 1800,
-        'North America': 1400,
-        'Europe': 900,
-        'Oceania': 800
-    },
-    
-    // Global monthly precipitation patterns (mm) - WMO data
-    seasonal: [95, 88, 105, 120, 135, 150, 160, 145, 125, 110, 98, 100]
-};
 
 // Setup all charts
 function setupCharts() {
+    console.log('Setting up charts...');
     createCrimeChart();
     createCrimeTypesChart();
     createConcertsChart();
     createGenreChart();
     createRainfallChart();
     createSeasonalChart();
+    console.log('All charts created!');
 }
 
-// Crime Rate by Region Chart - Real Data
+// Create crime rate chart
 function createCrimeChart() {
-    const ctx = document.getElementById('crimeChart').getContext('2d');
+    const ctx = document.getElementById('crimeChart');
+    if (!ctx) {
+        console.error('Crime chart canvas not found!');
+        return;
+    }
     
-    const data = {
-        labels: Object.keys(realData.crimeRates),
-        datasets: [{
-            label: 'Crime Rate per 100k (2022-2023)',
-            data: Object.values(realData.crimeRates),
-            backgroundColor: [
-                'rgba(0, 255, 136, 0.8)',
-                'rgba(255, 0, 128, 0.8)',
-                'rgba(0, 128, 255, 0.8)',
-                'rgba(255, 105, 180, 0.8)',
-                'rgba(138, 43, 226, 0.8)',
-                'rgba(0, 255, 255, 0.8)'
-            ],
-            borderColor: [
-                chartColors.primary,
-                chartColors.secondary,
-                chartColors.accent,
-                chartColors.retroPink,
-                chartColors.retroPurple,
-                chartColors.retroCyan
-            ],
-            borderWidth: 3,
-            borderRadius: 8,
-            borderSkipped: false,
-        }]
-    };
-
-    const config = {
+    console.log('Creating crime chart...');
+    new Chart(ctx, {
         type: 'bar',
-        data: data,
+        data: {
+            labels: realData.crime.regions,
+            datasets: [{
+                label: 'Crime Rate per 100k',
+                data: realData.crime.rates,
+                backgroundColor: [
+                    chartColors.retroCyan,
+                    chartColors.retroPink,
+                    chartColors.retroYellow,
+                    chartColors.neonBlue,
+                    chartColors.neonGreen,
+                    chartColors.neonPurple
+                ],
+                borderColor: chartColors.primary,
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.retroCyan,
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroCyan,
+                    bodyColor: chartColors.retroPink,
+                    borderColor: chartColors.primary,
                     borderWidth: 2,
-                    cornerRadius: 10,
-                    displayColors: false,
                     callbacks: {
                         label: function(context) {
                             return `Crime Rate: ${context.parsed.y.toLocaleString()} per 100k`;
@@ -152,14 +129,10 @@ function createCrimeChart() {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: 'rgba(0, 255, 255, 0.1)',
-                        drawBorder: false
+                        color: 'rgba(0,255,255,0.2)'
                     },
                     ticks: {
                         color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        },
                         callback: function(value) {
                             return value.toLocaleString();
                         }
@@ -167,59 +140,59 @@ function createCrimeChart() {
                 },
                 x: {
                     grid: {
-                        display: false
+                        color: 'rgba(255,0,255,0.2)'
                     },
                     ticks: {
-                        color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        }
+                        color: chartColors.retroPink
                     }
                 }
             },
             animation: {
                 duration: 2000,
-                easing: 'easeOutQuart'
+                easing: 'easeInOutQuart'
             }
         }
-    };
-
-    new Chart(ctx, config);
+    });
+    console.log('Crime chart created successfully!');
 }
 
-// Crime Types Distribution Chart - Real Data
+// Create crime types distribution chart
 function createCrimeTypesChart() {
-    const ctx = document.getElementById('crimeTypesChart').getContext('2d');
+    const ctx = document.getElementById('crimeTypesChart');
+    if (!ctx) {
+        console.error('Crime types chart canvas not found!');
+        return;
+    }
     
-    const data = {
-        labels: Object.keys(realData.crimeTypes),
-        datasets: [{
-            data: Object.values(realData.crimeTypes),
-            backgroundColor: [
-                'rgba(0, 255, 136, 0.8)',
-                'rgba(255, 0, 128, 0.8)',
-                'rgba(0, 128, 255, 0.8)',
-                'rgba(255, 105, 180, 0.8)',
-                'rgba(138, 43, 226, 0.8)'
-            ],
-            borderColor: [
-                chartColors.primary,
-                chartColors.secondary,
-                chartColors.accent,
-                chartColors.retroPink,
-                chartColors.retroPurple
-            ],
-            borderWidth: 3,
-            hoverOffset: 15
-        }]
-    };
-
-    const config = {
+    console.log('Creating crime types chart...');
+    new Chart(ctx, {
         type: 'doughnut',
-        data: data,
+        data: {
+            labels: realData.crime.types,
+            datasets: [{
+                data: realData.crime.percentages,
+                backgroundColor: [
+                    chartColors.retroCyan,
+                    chartColors.retroPink,
+                    chartColors.retroYellow,
+                    chartColors.neonBlue,
+                    chartColors.neonGreen
+                ],
+                borderColor: chartColors.primary,
+                borderWidth: 3
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
             plugins: {
                 legend: {
                     position: 'bottom',
@@ -228,75 +201,78 @@ function createCrimeTypesChart() {
                         font: {
                             family: 'Share Tech Mono',
                             size: 12
-                        },
-                        padding: 20,
-                        usePointStyle: true
+                        }
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.retroCyan,
-                    borderWidth: 2,
-                    cornerRadius: 10,
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.parsed}%`;
-                        }
-                    }
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroPink,
+                    bodyColor: chartColors.retroCyan,
+                    borderColor: chartColors.primary,
+                    borderWidth: 2
                 }
             },
             animation: {
                 duration: 2000,
-                easing: 'easeOutQuart'
+                easing: 'easeInOutQuart'
             }
         }
-    };
-
-    new Chart(ctx, config);
+    });
+    console.log('Crime types chart created successfully!');
 }
 
-// Concerts by Country Chart - Real Data
+// Create concerts chart
 function createConcertsChart() {
-    const ctx = document.getElementById('concertsChart').getContext('2d');
+    const ctx = document.getElementById('concertsChart');
+    if (!ctx) {
+        console.error('Concerts chart canvas not found!');
+        return;
+    }
     
-    const data = {
-        labels: Object.keys(realData.concerts),
-        datasets: [{
-            label: 'Major Concerts & Events (2023)',
-            data: Object.values(realData.concerts),
-            backgroundColor: 'rgba(0, 255, 255, 0.3)',
-            borderColor: chartColors.retroCyan,
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: chartColors.retroCyan,
-            pointBorderColor: '#ffffff',
-            pointBorderWidth: 2,
-            pointRadius: 6,
-            pointHoverRadius: 8
-        }]
-    };
-
-    const config = {
-        type: 'line',
-        data: data,
+    console.log('Creating concerts chart...');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: realData.concerts.countries,
+            datasets: [{
+                label: 'Number of Concerts',
+                data: realData.concerts.counts,
+                backgroundColor: [
+                    chartColors.retroCyan,
+                    chartColors.retroPink,
+                    chartColors.retroYellow,
+                    chartColors.neonBlue,
+                    chartColors.neonGreen,
+                    chartColors.neonPurple,
+                    chartColors.primary,
+                    chartColors.secondary
+                ],
+                borderColor: chartColors.primary,
+                borderWidth: 2,
+                borderRadius: 8
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.retroCyan,
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroCyan,
+                    bodyColor: chartColors.retroPink,
+                    borderColor: chartColors.primary,
                     borderWidth: 2,
-                    cornerRadius: 10,
-                    displayColors: false,
                     callbacks: {
                         label: function(context) {
                             return `Concerts: ${context.parsed.y.toLocaleString()}`;
@@ -308,14 +284,10 @@ function createConcertsChart() {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: 'rgba(0, 255, 255, 0.1)',
-                        drawBorder: false
+                        color: 'rgba(0,255,255,0.2)'
                     },
                     ticks: {
                         color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        },
                         callback: function(value) {
                             return value.toLocaleString();
                         }
@@ -323,63 +295,61 @@ function createConcertsChart() {
                 },
                 x: {
                     grid: {
-                        display: false
+                        color: 'rgba(255,0,255,0.2)'
                     },
                     ticks: {
-                        color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        }
+                        color: chartColors.retroPink
                     }
                 }
             },
             animation: {
                 duration: 2000,
-                easing: 'easeOutQuart'
+                easing: 'easeInOutQuart'
             }
         }
-    };
-
-    new Chart(ctx, config);
+    });
+    console.log('Concerts chart created successfully!');
 }
 
-// Music Genre Popularity Chart - Real Data
+// Create genre popularity chart
 function createGenreChart() {
-    const ctx = document.getElementById('genreChart').getContext('2d');
+    const ctx = document.getElementById('genreChart');
+    if (!ctx) {
+        console.error('Genre chart canvas not found!');
+        return;
+    }
     
-    const data = {
-        labels: Object.keys(realData.genres),
-        datasets: [{
-            label: 'Genre Popularity (%)',
-            data: Object.values(realData.genres),
-            backgroundColor: [
-                'rgba(0, 255, 136, 0.8)',
-                'rgba(255, 0, 128, 0.8)',
-                'rgba(0, 128, 255, 0.8)',
-                'rgba(255, 105, 180, 0.8)',
-                'rgba(138, 43, 226, 0.8)',
-                'rgba(0, 255, 255, 0.8)',
-                'rgba(255, 165, 0, 0.8)'
-            ],
-            borderColor: [
-                chartColors.primary,
-                chartColors.secondary,
-                chartColors.accent,
-                chartColors.retroPink,
-                chartColors.retroPurple,
-                chartColors.retroCyan,
-                '#ffa500'
-            ],
-            borderWidth: 2
-        }]
-    };
-
-    const config = {
+    console.log('Creating genre chart...');
+    new Chart(ctx, {
         type: 'polarArea',
-        data: data,
+        data: {
+            labels: realData.concerts.genres,
+            datasets: [{
+                data: realData.concerts.popularity,
+                backgroundColor: [
+                    'rgba(0,255,255,0.7)',
+                    'rgba(255,0,255,0.7)',
+                    'rgba(255,255,0,0.7)',
+                    'rgba(0,128,255,0.7)',
+                    'rgba(0,255,128,0.7)',
+                    'rgba(128,0,255,0.7)',
+                    'rgba(255,128,0,0.7)'
+                ],
+                borderColor: chartColors.primary,
+                borderWidth: 2
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
             plugins: {
                 legend: {
                     position: 'right',
@@ -387,164 +357,78 @@ function createGenreChart() {
                         color: chartColors.retroCyan,
                         font: {
                             family: 'Share Tech Mono',
-                            size: 11
-                        },
-                        padding: 15
+                            size: 12
+                        }
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.retroCyan,
-                    borderWidth: 2,
-                    cornerRadius: 10,
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.parsed}%`;
-                        }
-                    }
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroPink,
+                    bodyColor: chartColors.retroCyan,
+                    borderColor: chartColors.primary,
+                    borderWidth: 2
                 }
             },
             animation: {
                 duration: 2000,
-                easing: 'easeOutQuart'
+                easing: 'easeInOutQuart'
             }
         }
-    };
-
-    new Chart(ctx, config);
+    });
+    console.log('Genre chart created successfully!');
 }
 
-// Annual Rainfall by Continent Chart - Real Data
+// Create rainfall chart
 function createRainfallChart() {
-    const ctx = document.getElementById('rainfallChart').getContext('2d');
+    const ctx = document.getElementById('rainfallChart');
+    if (!ctx) {
+        console.error('Rainfall chart canvas not found!');
+        return;
+    }
     
-    const data = {
-        labels: Object.keys(realData.rainfall),
-        datasets: [{
-            label: 'Annual Rainfall (mm)',
-            data: Object.values(realData.rainfall),
-            backgroundColor: 'rgba(0, 128, 255, 0.3)',
-            borderColor: chartColors.accent,
-            borderWidth: 3,
-            fill: true,
-            tension: 0.3,
-            pointBackgroundColor: chartColors.accent,
-            pointBorderColor: '#ffffff',
-            pointBorderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7
-        }]
-    };
-
-    const config = {
-        type: 'area',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.accent,
-                    borderWidth: 2,
-                    cornerRadius: 10,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return `Rainfall: ${context.parsed.y.toLocaleString()} mm`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(0, 128, 255, 0.1)',
-                        drawBorder: false
-                    },
-                    ticks: {
-                        color: chartColors.accent,
-                        font: {
-                            family: 'Share Tech Mono'
-                        },
-                        callback: function(value) {
-                            return value.toLocaleString() + ' mm';
-                        }
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: chartColors.accent,
-                        font: {
-                            family: 'Share Tech Mono'
-                        }
-                    }
-                }
-            },
-            animation: {
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
-        }
-    };
-
-    new Chart(ctx, config);
-}
-
-// Seasonal Rainfall Patterns Chart - Real Data
-function createSeasonalChart() {
-    const ctx = document.getElementById('seasonalChart').getContext('2d');
-    
-    const data = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-            label: 'Global Average Monthly Rainfall (mm)',
-            data: realData.seasonal,
-            backgroundColor: 'rgba(0, 255, 255, 0.2)',
-            borderColor: chartColors.retroCyan,
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: chartColors.retroCyan,
-            pointBorderColor: '#ffffff',
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            pointHoverRadius: 6
-        }]
-    };
-
-    const config = {
+    console.log('Creating rainfall chart...');
+    new Chart(ctx, {
         type: 'line',
-        data: data,
+        data: {
+            labels: realData.precipitation.regions,
+            datasets: [{
+                label: 'Annual Rainfall (mm)',
+                data: realData.precipitation.annual,
+                borderColor: chartColors.retroCyan,
+                backgroundColor: 'rgba(0,255,255,0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: chartColors.retroPink,
+                pointBorderColor: chartColors.primary,
+                pointBorderWidth: 2,
+                pointRadius: 6
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: '#ffffff',
-                    borderColor: chartColors.retroCyan,
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroCyan,
+                    bodyColor: chartColors.retroPink,
+                    borderColor: chartColors.primary,
                     borderWidth: 2,
-                    cornerRadius: 10,
-                    displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return `Rainfall: ${context.parsed.y} mm`;
+                            return `Rainfall: ${context.parsed.y.toLocaleString()} mm/year`;
                         }
                     }
                 }
@@ -553,169 +437,233 @@ function createSeasonalChart() {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: 'rgba(0, 255, 255, 0.1)',
-                        drawBorder: false
+                        color: 'rgba(0,255,255,0.2)'
                     },
                     ticks: {
                         color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        },
                         callback: function(value) {
-                            return value + ' mm';
+                            return value.toLocaleString();
                         }
                     }
                 },
                 x: {
                     grid: {
-                        display: false
+                        color: 'rgba(255,0,255,0.2)'
                     },
                     ticks: {
-                        color: chartColors.retroCyan,
-                        font: {
-                            family: 'Share Tech Mono'
-                        }
+                        color: chartColors.retroPink
                     }
                 }
             },
             animation: {
                 duration: 2000,
-                easing: 'easeOutQuart'
+                easing: 'easeInOutQuart'
             }
         }
-    };
-
-    new Chart(ctx, config);
+    });
+    console.log('Rainfall chart created successfully!');
 }
 
-// Setup filters and interactive features
+// Create seasonal chart
+function createSeasonalChart() {
+    const ctx = document.getElementById('seasonalChart');
+    if (!ctx) {
+        console.error('Seasonal chart canvas not found!');
+        return;
+    }
+    
+    console.log('Creating seasonal chart...');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Spring', 'Summer', 'Autumn', 'Winter'],
+            datasets: [
+                {
+                    label: 'Southeast Asia',
+                    data: [
+                        realData.precipitation.seasonal.spring[0],
+                        realData.precipitation.seasonal.summer[0],
+                        realData.precipitation.seasonal.autumn[0],
+                        realData.precipitation.seasonal.winter[0]
+                    ],
+                    backgroundColor: chartColors.retroCyan
+                },
+                {
+                    label: 'Amazon Basin',
+                    data: [
+                        realData.precipitation.seasonal.spring[1],
+                        realData.precipitation.seasonal.summer[1],
+                        realData.precipitation.seasonal.autumn[1],
+                        realData.precipitation.seasonal.winter[1]
+                    ],
+                    backgroundColor: chartColors.retroPink
+                },
+                {
+                    label: 'Central Africa',
+                    data: [
+                        realData.precipitation.seasonal.spring[2],
+                        realData.precipitation.seasonal.summer[2],
+                        realData.precipitation.seasonal.autumn[2],
+                        realData.precipitation.seasonal.winter[2]
+                    ],
+                    backgroundColor: chartColors.retroYellow
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: chartColors.retroCyan,
+                        font: {
+                            family: 'Share Tech Mono',
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    titleColor: chartColors.retroPink,
+                    bodyColor: chartColors.retroCyan,
+                    borderColor: chartColors.primary,
+                    borderWidth: 2
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0,255,255,0.2)'
+                    },
+                    ticks: {
+                        color: chartColors.retroCyan
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255,0,255,0.2)'
+                    },
+                    ticks: {
+                        color: chartColors.retroPink
+                    }
+                }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeInOutQuart'
+            }
+        }
+    });
+    console.log('Seasonal chart created successfully!');
+}
+
+// Setup filters
 function setupFilters() {
     const updateButton = document.getElementById('updateCharts');
-    const yearFilter = document.getElementById('yearFilter');
-    const regionFilter = document.getElementById('regionFilter');
-
-    updateButton.addEventListener('click', () => {
-        // Simulate data update
-        updateButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-        
-        setTimeout(() => {
-            updateButton.innerHTML = '<i class="fas fa-check"></i> Updated!';
-            
-            // Update summary numbers
-            updateSummaryNumbers();
+    if (updateButton) {
+        updateButton.addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            this.disabled = true;
             
             setTimeout(() => {
-                updateButton.innerHTML = '<i class="fas fa-sync-alt"></i> Update Charts';
-            }, 2000);
-        }, 1500);
-    });
-
-    // Add hover effects to filter panel
-    const filterPanel = document.querySelector('.filter-panel');
-    filterPanel.addEventListener('mouseenter', () => {
-        filterPanel.style.transform = 'scale(1.02)';
-    });
+                this.innerHTML = '<i class="fas fa-check"></i> Updated!';
+                this.disabled = false;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Update Charts';
+                }, 2000);
+            }, 1500);
+        });
+    }
     
-    filterPanel.addEventListener('mouseleave', () => {
-        filterPanel.style.transform = 'scale(1)';
-    });
+    // Update summary numbers with animation
+    updateSummaryNumbers();
 }
 
 // Update summary numbers with animation
 function updateSummaryNumbers() {
-    const totalData = document.getElementById('totalData');
-    const countriesCount = document.getElementById('countriesCount');
-    const timePeriod = document.getElementById('timePeriod');
-
-    // Calculate real totals from our data
-    const totalCrimeData = Object.keys(realData.crimeRates).length;
-    const totalConcertData = Object.keys(realData.concerts).length;
-    const totalGenreData = Object.keys(realData.genres).length;
-    const totalRainfallData = Object.keys(realData.rainfall).length;
-    const totalSeasonalData = realData.seasonal.length;
+    const summaryNumbers = document.querySelectorAll('.summary-number');
     
-    const totalDataPoints = totalCrimeData + totalConcertData + totalGenreData + totalRainfallData + totalSeasonalData;
-    const totalCountries = Object.keys(realData.concerts).length;
-
-    // Animate numbers
-    animateNumber(totalData, totalDataPoints, totalDataPoints + 15);
-    animateNumber(countriesCount, totalCountries, totalCountries + 8);
-    
-    // Add pulse effect
-    totalData.style.animation = 'pulse 0.6s ease-in-out';
-    countriesCount.style.animation = 'pulse 0.6s ease-in-out';
-    
-    setTimeout(() => {
-        totalData.style.animation = '';
-        countriesCount.style.animation = '';
-    }, 600);
+    summaryNumbers.forEach(element => {
+        const finalValue = element.textContent;
+        const numericValue = parseInt(finalValue.replace(/,/g, ''));
+        
+        if (!isNaN(numericValue)) {
+            animateNumber(element, 0, numericValue);
+        }
+    });
 }
 
 // Animate number counting
 function animateNumber(element, start, end) {
-    const duration = 1000;
-    const step = (end - start) / (duration / 16);
-    let current = start;
+    const duration = 2000;
+    const startTime = performance.now();
     
-    const timer = setInterval(() => {
-        current += step;
-        if (current >= end) {
-            current = end;
-            clearInterval(timer);
+    function updateNumber(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = Math.floor(start + (end - start) * progress);
+        element.textContent = current.toLocaleString();
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateNumber);
         }
-        element.textContent = Math.floor(current);
-    }, 16);
+    }
+    
+    requestAnimationFrame(updateNumber);
 }
 
 // Setup animations
 function setupAnimations() {
-    // Add scroll animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('fade-in');
             }
         });
     }, observerOptions);
-
-    // Observe chart cards
-    document.querySelectorAll('.chart-card').forEach(card => {
-        card.classList.add('fade-in');
-        observer.observe(card);
-    });
-
-    // Observe summary cards
-    document.querySelectorAll('.summary-card').forEach(card => {
-        card.classList.add('fade-in');
-        observer.observe(card);
-    });
+    
+    const elementsToAnimate = document.querySelectorAll('.stats-section, .chart-card, .preview-card, .explorer-container, .summary-card');
+    elementsToAnimate.forEach(el => observer.observe(el));
 }
 
 // Setup audio player
 function setupAudioPlayer() {
     const audioPlayer = document.getElementById('audioPlayer');
     if (audioPlayer) {
-        audioPlayer.play().catch(e => console.log('Автовоспроизведение заблокировано браузером'));
+        audioPlayer.volume = 0.3;
+        
+        // Add some retro effects to the audio player
+        audioPlayer.addEventListener('play', function() {
+            document.body.classList.add('music-playing');
+        });
+        
+        audioPlayer.addEventListener('pause', function() {
+            document.body.classList.remove('music-playing');
+        });
     }
 }
 
-// Add some random glitch effects
-setInterval(() => {
-    const randomCard = document.querySelectorAll('.chart-card')[Math.floor(Math.random() * 6)];
-    if (randomCard) {
-        randomCard.style.filter = 'hue-rotate(180deg)';
-        setTimeout(() => {
-            randomCard.style.filter = '';
-        }, 200);
-    }
-}, 8000);
-
-// Add floating particles effect
+// Create floating particles
 function createFloatingParticles() {
     const particlesContainer = document.createElement('div');
     particlesContainer.className = 'floating-particles';
@@ -727,48 +675,41 @@ function createFloatingParticles() {
         height: 100%;
         pointer-events: none;
         z-index: 1;
+        overflow: hidden;
     `;
     
     document.body.appendChild(particlesContainer);
     
-    for (let i = 0; i < 20; i++) {
+    // Create some floating icons
+    const icons = ['🎵', '📊', '🌍', '🎨', '💻', '🚀'];
+    
+    for (let i = 0; i < 8; i++) {
         const particle = document.createElement('div');
+        particle.textContent = icons[Math.floor(Math.random() * icons.length)];
         particle.style.cssText = `
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: ${chartColors.retroCyan};
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: float-particle ${3 + Math.random() * 4}s linear infinite;
-            left: ${Math.random() * 100}%;
-            animation-delay: ${Math.random() * 3}s;
+            font-size: 24px;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+            animation-delay: ${i * 2.5}s;
         `;
+        
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
         particlesContainer.appendChild(particle);
     }
+    
+    // Add floating animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.1; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
-// Create floating particles
-createFloatingParticles();
-
-// Add CSS for floating particles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes float-particle {
-        0% {
-            transform: translateY(100vh) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.6;
-        }
-        90% {
-            opacity: 0.6;
-        }
-        100% {
-            transform: translateY(-100px) rotate(360deg);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
