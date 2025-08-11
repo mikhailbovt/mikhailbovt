@@ -74,6 +74,18 @@
 
 ---
 
+## 🌍 **My Journey**
+
+Born in **Russia**, raised in **Vietnam**, lived in **Canada**, and currently studying in **Singapore**. My multicultural journey has shaped my perspective on data and analytics across different cultures and markets.
+
+### 🎵 **Personal Vibes**
+- **Lo-Fi Enthusiast**: I work best with lo-fi beats in the background
+- **Guitar Player**: When I'm not crunching numbers, you'll find me playing guitar
+- **Ocean Lover**: I love the sea and evening walks while listening to music
+- **Design Aficionado**: I like when everything is well-designed
+
+---
+
 ## 🛠️ **Tech Stack**
 
 <div align="center">
@@ -149,7 +161,7 @@ graph TD
 
 <div align="center">
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in//mikhail-bovt-7366ba281/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mikhail-bovt-7366ba281/)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bovt.mikhail@mail.ru)
 [![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](TODO)
 

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Statistics - Mikhail Bovt</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stats-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- VHS Overlay Effects -->
+    <div class="vhs-overlay"></div>
+    
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="scanlines"></div>
+        <div class="noise"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="glitch" data-text="MB">MB</a>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="stats.html" class="nav-link active">Statistics</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero stats-hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="glitch-text" data-text="Global">Global</span>
+                        <br>
+                        <span class="glitch-text" data-text="Statistics">Statistics</span>
+                    </h1>
+                    <p class="hero-subtitle">Data-driven insights with retro vibes</p>
+                    <p class="hero-description">
+                        Explore fascinating global data through interactive charts and visualizations. 
+                        From crime rates to concert culture, discover patterns that shape our world.
+                    </p>
+                </div>
+                <div class="stats-preview">
+                    <div class="preview-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Crime Rates</h3>
+                        <p>Global crime statistics</p>
+                    </div>
+                    <div class="preview-card">
+                        <i class="fas fa-music"></i>
+                        <h3>Concerts</h3>
+                        <p>Music events by country</p>
+                    </div>
+                    <div class="preview-card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h3>Precipitation</h3>
+                        <p>Global rainfall patterns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crime Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                Global Crime Statistics
+            </h2>
+            <div class="chart-container">
+                <div class="chart-card">
+                                           <h3>Crime Rate by Region (2022-2023)</h3>
+                    <canvas id="crimeChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Real data from UNODC and World Bank showing crime rates per 100,000 inhabitants across major world regions (2022-2023)</p>
+                           </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Crime Types Distribution</h3>
+                    <canvas id="crimeTypesChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Global crime distribution based on UNODC statistics showing percentage breakdown by crime type</p>
+                           </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concert Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-music"></i>
+                Global Concert Statistics
+            </h2>
+            <div class="chart-container">
+                <div class="chart-card">
+                    <h3>Concerts by Country (2023)</h3>
+                    <canvas id="concertsChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Real concert data from Pollstar and Billboard showing major music events by country in 2023</p>
+                           </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Music Genre Popularity</h3>
+                    <canvas id="genreChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Music genre popularity data from Spotify and Billboard charts for global concerts</p>
+                           </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Precipitation Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-cloud-rain"></i>
+                Global Precipitation Patterns
+            </h2>
+            <div class="chart-container">
+                <div class="chart-card">
+                    <h3>Annual Rainfall by Continent</h3>
+                    <canvas id="rainfallChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Real precipitation data from World Meteorological Organization showing annual rainfall by continent</p>
+                           </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Seasonal Rainfall Patterns</h3>
+                    <canvas id="seasonalChart"></canvas>
+                                               <div class="chart-info">
+                               <p>Global monthly precipitation patterns from WMO data showing seasonal rainfall variations</p>
+                           </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Interactive Data Explorer -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                Interactive Data Explorer
+            </h2>
+            <div class="explorer-container">
+                <div class="filter-panel">
+                    <h3>Filter Data</h3>
+                    <div class="filter-group">
+                        <label>Year:</label>
+                        <select id="yearFilter">
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Region:</label>
+                        <select id="regionFilter">
+                            <option value="all">All Regions</option>
+                            <option value="europe">Europe</option>
+                            <option value="asia">Asia</option>
+                            <option value="americas">Americas</option>
+                            <option value="africa">Africa</option>
+                            <option value="oceania">Oceania</option>
+                        </select>
+                    </div>
+                    <button id="updateCharts" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i>
+                        Update Charts
+                    </button>
+                </div>
+                <div class="data-summary">
+                    <div class="summary-card">
+                        <h4>Total Data Points</h4>
+                        <span id="totalData" class="summary-number">1,247</span>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Countries Analyzed</h4>
+                        <span id="countriesCount" class="summary-number">156</span>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Time Period</h4>
+                        <span id="timePeriod" class="summary-number">2021-2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            <i class="fas fa-chart-bar"></i>
+            Data Visualization Portfolio
+            <i class="fas fa-chart-line"></i>
+        </p>
+    </footer>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="audio-info">
+            <span class="track-name">🎵 Lo-Fi Girl Radio</span>
+        </div>
+        <audio id="audioPlayer" controls>
+            <source src="https://stream.zeno.fm/0r0xa792kwzuv" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="stats-script.js"></script>
+</body>
+</html>

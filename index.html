@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikhail Bovt - Data Scientist & Analytics Expert</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- VHS Glitch Effect Overlay -->
+    <div class="vhs-overlay"></div>
+    
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="scanlines"></div>
+        <div class="noise"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="glitch" data-text="Mikhail Bovt">Mikhail Bovt</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="stats.html" class="nav-link">Statistics</a>
+            </div>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="glitch-text" data-text="Mikhail Bovt">Mikhail Bovt</span>
+                        </h1>
+                        <p class="hero-subtitle">Data Scientist & Analytics Expert</p>
+                        <p class="hero-description">
+                            Transforming raw data into golden insights with a passion for beautiful visualizations and meaningful analysis
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToSection('about')">
+                                <i class="fas fa-rocket"></i> Explore My World
+                            </button>
+                            <button class="btn btn-secondary" onclick="scrollToSection('contact')">
+                                <i class="fas fa-paper-plane"></i> Get In Touch
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="profile-container">
+                            <div class="profile-image">
+                                <img src="public/images/me.jpg" alt="Mikhail Bovt" class="profile-img">
+                                <div class="profile-glow"></div>
+                            </div>
+                            <div class="floating-icons">
+                                <div class="icon python"><i class="fab fa-python"></i></div>
+                                <div class="icon r"><i class="fas fa-chart-line"></i></div>
+                                <div class="icon sql"><i class="fas fa-database"></i></div>
+                                <div class="icon jupyter"><i class="fas fa-book"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="glitch-text" data-text="About Me">About Me</span>
+                </h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <div class="story-card">
+                            <h3><i class="fas fa-globe-americas"></i> Global Citizen</h3>
+                            <p>Born in Russia, raised in Vietnam, lived in Canada, and currently studying in Singapore. My multicultural journey has shaped my perspective on data and analytics across different cultures and markets.</p>
+                        </div>
+                        
+                        <div class="story-card">
+                            <h3><i class="fas fa-music"></i> Lo-Fi Enthusiast</h3>
+                            <p>I work best with lo-fi beats in the background. There's something about those chill vibes that helps me dive deep into data and find the hidden patterns that others might miss.</p>
+                        </div>
+                        
+                        <div class="story-card">
+                            <h3><i class="fas fa-guitar"></i> Guitar Player</h3>
+                            <p>When I'm not crunching numbers, you'll find me playing guitar. Music and data analysis share a beautiful rhythm - both require understanding patterns, timing, and harmony.</p>
+                        </div>
+                        
+                        <div class="story-card">
+                            <h3><i class="fas fa-water"></i> Ocean Lover</h3>
+                            <p>I love the sea and evening walks while listening to music. The ocean's vastness reminds me of big data - seemingly endless, but full of beautiful patterns waiting to be discovered.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-visual">
+                        <div class="world-map">
+                            <div class="location russia" data-tooltip="Born here">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Russia</span>
+                            </div>
+                            <div class="location vietnam" data-tooltip="Raised here">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Vietnam</span>
+                            </div>
+                            <div class="location canada" data-tooltip="Lived here">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Canada</span>
+                            </div>
+                            <div class="location singapore" data-tooltip="Currently here">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Singapore</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="glitch-text" data-text="Skills & Expertise">Skills & Expertise</span>
+                </h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-chart-bar"></i> Data Analysis</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="Statistical Modeling">
+                                <span class="skill-name">Statistical Modeling</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="95"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Predictive Analytics">
+                                <span class="skill-name">Predictive Analytics</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="90"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="A/B Testing">
+                                <span class="skill-name">A/B Testing</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="88"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3><i class="fab fa-python"></i> Python Ecosystem</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="Pandas & NumPy">
+                                <span class="skill-name">Pandas & NumPy</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="92"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Scikit-learn">
+                                <span class="skill-name">Scikit-learn</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="89"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Data Visualization">
+                                <span class="skill-name">Data Visualization</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="94"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3><i class="fas fa-chart-line"></i> R Programming</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="Tidyverse">
+                                <span class="skill-name">Tidyverse</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="87"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="ggplot2">
+                                <span class="skill-name">ggplot2</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="91"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Statistical Analysis">
+                                <span class="skill-name">Statistical Analysis</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="93"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3><i class="fas fa-database"></i> Data Engineering</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="SQL">
+                                <span class="skill-name">SQL</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="90"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Database Design">
+                                <span class="skill-name">Database Design</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="85"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="ETL Processes">
+                                <span class="skill-name">ETL Processes</span>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" data-level="82"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="glitch-text" data-text="Let's Connect">Let's Connect</span>
+                </h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <a href="https://linkedin.com/in/mikhail-bovt-7366ba281/" target="_blank">LinkedIn</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:bovt.mikhail@mail.ru">bovt.mikhail@mail.ru</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <a href="https://github.com/mikhailbovt" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-message">
+                        <p>Feel free to reach out through any of the channels above. I'm always excited to discuss data science, analytics, or just chat about lo-fi music! 🎵</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Mikhail Bovt. Made with <i class="fas fa-heart"></i> and lots of <i class="fas fa-coffee"></i></p>
+        </div>
+    </footer>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="audio-info">
+            <span class="track-name">🎵 Lo-Fi Girl Radio</span>
+        </div>
+        <audio id="audioPlayer" controls>
+            <source src="https://stream.zeno.fm/0r0xa792kwzuv" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
