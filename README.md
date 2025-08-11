@@ -11,14 +11,6 @@
   [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
   [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mikhailbovt)
   
-  ---
-  
-  <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin: 20px 0;">
-    <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" alt="Data Science" width="200" height="150">
-    <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" alt="Analytics" width="200" height="150">
-    <img src="https://media.giphy.com/media/l0Hlvt9J5VbpxQnqE/giphy.gif" alt="Statistics" width="200" height="150">
-  </div>
-  
 </div>
 
 ---
@@ -167,17 +159,6 @@ graph TD
 
 </div>
 
----
-
-<div align="center">
-
-### 🚀 **Ready to Transform Your Data into Gold?** 🚀
-
-*Let's make some magic happen!* ✨
-
-![Data Science](https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif)
-
-</div>
 
 ---
 
