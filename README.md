@@ -130,11 +130,10 @@ graph TD
 
 ---
 
-## 🌟 **Why Choose Me?**
+## 🌟 **Why Work With Me?**
 
 <div align="center">
 
-> *"I don't just analyze data – I tell stories with it!"* 📖✨
 
 </div>
 
@@ -153,7 +152,6 @@ graph TD
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mikhail-bovt-7366ba281/)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bovt.mikhail@mail.ru)
-[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](https://mikhailbovt.github.io/mikhailbovt/)
 
 </div>
 
@@ -165,7 +163,6 @@ graph TD
 
 - 🎵 I code listening to lo-fi
 - 🌊 I like music 
-- 🎨 I like when everything is well-designed
 
 </div>
 
