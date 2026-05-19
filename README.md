@@ -18,7 +18,6 @@
 
 <div align="center">
   
-  > *"Data is the new oil, and I'm the refinery that turns raw information into golden insights!"* 🎯✨
   
 </div>
 
